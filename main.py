@@ -11,7 +11,7 @@ house2 = array ('i',[15,8,4])
 house3 = array ('i',[30,15,6])
 shop = array ('i',[10,1])
 houses = 0
-shops = 100
+shops = 0
 pop = 6
 pop_max = 12
 profit = 15
@@ -30,12 +30,12 @@ sh_price = sh_func(s_price_buy,b_price_buy)
 #функция подсчёта роста населения
 def pop_func(shops,cash,pop,pop_max):
 	pop_up=shops*0.5+cash/100+pop/10
-	pop += pop_up
+#	pop += pop_up # для дэбага раскоментировать
 	print(pop_up)
 	if pop > pop_max:pop = pop_max
 	return pop
 	
-print('PyCity Alpha 0.1r21 by A/S')
+print('PyCity Alpha 0.1r21.1 by A/S')
 name = input('Введите название вашего города:')
 print('Введите "команды",что бы увидеть список доступных действий и пояснения к ним')
 while True:

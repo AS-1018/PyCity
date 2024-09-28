@@ -1,8 +1,8 @@
 import tkinter as tk
 
-#Вывод окнв \\разгобрать чо и как
+# Вывод окна
 root = tk.Tk()
-root.title('game')
+root.title('PyCity Graphic')
 
 window_width = 640
 window_height = 480
@@ -18,7 +18,13 @@ center_y = int(screen_height/2 - window_height / 2)
 # set the position of the window to the center of the screen
 root.geometry(f'{window_width}x{window_height}+{center_x}+{center_y}')
 
-mess = tk.Label(root, text = f"Ход: Деньги; Население:")
-mess.pack()
+st = tk.Label(root, text=f"Ход: Деньги: Население:", font=("Arial Bold", 20))
+st.place(x=0, y=0)
+
+nh = tk.Button(root, text="Следущий ход",  font=("Arial Bold", 20))
+nh.place(x=432, y=425)
+
+cmd = tk.Text(root, height=3, width=54)
+cmd.place(x=0, y=430)
 
 root.mainloop()

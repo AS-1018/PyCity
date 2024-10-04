@@ -1,4 +1,5 @@
 
+# рассчёт уровня
 def get_lvl(h1, lv1, h2, lv2, h3, lv3, sh, lvs,):
     lvl = h1 * lv1 + h2 * lv2 + h3 * lv3 + sh * lvs
     return lvl
@@ -14,7 +15,24 @@ def get_stat(h1, h2, h3, sh, pr, df, ch, lvl, st):
     print(f"Кол-во 1-этажных домов:{h1} \nКол-во 3-этажных домов:{h2}")
     print(f"Кол-во 5-этажных домов:{h3} \nКол-во магазинов:{sh}\n")
 
+# вывод биржы
 
+
+def get_birg(s_price_buy, s_price_sell, b_price_buy, b_price_sell):
+    print(f"\nЦены на землю \nПокупка:{s_price_buy} \nПродажа:{s_price_sell}")
+    print(
+        f"Цены на строй. материалы \nПокупка:{b_price_buy} \nПродажа:{b_price_sell}\n")
+
+# вывод команд
+
+
+def get_cmd():
+    print("\nПостроить дом-1/3/5 - Построить 1/3/5-этажный дом")
+    print("Цена дома-1/3/5 - Цена 1/3/5-этажного дома")
+    print("Построить магазин \nЦена магазина \nСтатистика \nБиржа \nСледущий ход(сх)\n")
+
+
+# статус \\не работает
 def get_status(l):
     if 0 <= l < 100:
         st = "Хутор"

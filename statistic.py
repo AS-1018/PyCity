@@ -4,11 +4,13 @@ def get_lvl(h1, lv1, h2, lv2, h3, lv3, sh, lvs,):
     lvl = h1 * lv1 + h2 * lv2 + h3 * lv3 + sh * lvs
     return lvl
 
+# вывод статы
+
 
 def get_stat(h1, h2, h3, sh, pr, df, ch, lvl, st):
     # рассчёт статы (при каждом запросе считатетсЯ заново)
     houses = h1 + h2 + h3
-    # вывод статы
+    # вывод
     print(f"\nКоличество опыта:{lvl} \nСтатус населённого пункта:{st}")
     print(
         f"Доходы:{pr} \nРасходы:{df} \nЗаработок:{ch} \nКол-во всех домов:{houses}")

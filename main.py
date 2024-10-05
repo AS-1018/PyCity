@@ -3,6 +3,7 @@ from population import *
 from graphics import *
 from statistic import *
 from build import *
+from manage import *
 
 money = 0
 hod = 1
@@ -46,6 +47,7 @@ b_price_sell = 10
 pop = 6
 profit = 0
 defit = 0
+cash = 0
 st = ''
 
 # инициализация стартовых цен на дома
@@ -56,8 +58,14 @@ sh_price = sh_func(s_price_buy, b_price_buy)
 # определение начального опыта
 lvl = get_lvl(build_num['h1_num'], house1['lvl'], build_num['h2_num'], house2['lvl'],
               build_num['h3_num'], house3['lvl'], build_num['sh_num'], shop['lvl'],)
-# Определение начвального статуса
+# Определение начального статуса
 status = get_status(lvl)
+# рассчёт начального заработка
+profit = pr_func(house1['prof'], house2['prof'], house3['prof'], shop['prof'],
+                 build_num['h1_num'], build_num['h2_num'], build_num['h3_num'], shops)
+defit = df_func(house1['def'], house2['def'], house3['def'], shop['def'],
+                build_num['h1_num'], build_num['h2_num'], build_num['h3_num'], shops)
+cash = profit - defit
 
 logo_draw()
 
@@ -72,10 +80,6 @@ while True:
     defit = df_func(house1['def'], house2['def'], house3['def'], shop['def'],
                     build_num['h1_num'], build_num['h2_num'], build_num['h3_num'], shops)
     cash = profit - defit
-    # рассчёт населения
-    pop_max = pm_func(house1['pop'], house2['pop'], house3['pop'],
-                      build_num['h1_num'], build_num['h2_num'], build_num["h3_num"])
-    pop = pop_func(shops, cash, pop, pop_max)
 
     # ввод действия
     mess = input(f"{name}. Ход: {hod}  Денег: {money}  Население: {pop} >")
@@ -118,26 +122,7 @@ while True:
         case 'СТАТИСТИКА': get_stat(build_num['h1_num'], build_num['h2_num'], build_num['h3_num'],
                                     build_num['sh_num'], profit, defit, cash, lvl, status)
 
-        case 'СЛЕДУЩИЙ ХОД' | 'СХ':
-            houses = 0
-            hod += 1
-
-            money += cash
-            # формирование цен на следущий ход //БИРЖА
-            s_price_buy = s_buy_func(s_price_buy)
-            s_price_sell = s_sell_func(s_price_sell)
-            b_price_buy = b_buy_func(b_price_buy)
-            b_price_sell = b_sell_func(b_price_sell)
-            # формирование цен на следущий ход //ПОСТРОЙКИ
-            h_price_1 = h1_func(s_price_buy, b_price_buy)
-            h_price_2 = h2_func(s_price_buy, b_price_buy)
-            h_price_3 = h3_func(s_price_buy, b_price_buy)
-            sh_price = sh_func(s_price_buy, b_price_buy)
-            # определение опыта
-            lvl = get_lvl(build_num['h1_num'], house1['lvl'], build_num['h2_num'], house2['lvl'],
-                          build_num['h3_num'], house3['lvl'], build_num['sh_num'], shop['lvl'],)
-            # Определение статуса
-            st = get_status(lvl)
-
+        case 'СЛЕДУЩИЙ ХОД' | 'СХ': houses, hod, money, cash, s_price_buy, s_price_sell, b_price_buy, b_price_sell, h_price_1, h_price_2, h_price_3, sh_price, build_num, shops, pop, pop_max = nt(houses,
+                                                                                                                                                                                                   hod, money, cash, s_price_buy, s_price_sell, b_price_buy, b_price_sell, h_price_1, h_price_2, h_price_3, sh_price, build_num, house1, house2, house3, shop, shops, pop, pop_max)
         case other:
             print('Такой команды не существует,проверьте,правильно ли ввели команду')

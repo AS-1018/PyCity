@@ -50,7 +50,7 @@ def build_sh(money, sh_price, build_num):
     if money >= sh_price:
         build_num['sh_num'] = build_num['sh_num'] + 1
         money = money - sh_price
-        print("магазин построен")
+        print("Магазин построен")
     else:
         print(f"Недостаточно денег,  не хватает {sh_price - money}")
     return build_num['sh_num'], money

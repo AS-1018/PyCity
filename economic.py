@@ -2,39 +2,40 @@ from random import *
 
 # формирование цен:
 
+
 # покупка земли
 
-
 def s_buy_func(sb):
-    sb += randint(-15, 10)
-    if sb <= 0:
-        sb += 20
+    sb += randint(-30, 30)
+    if sb <= 20:
+        sb += 100
     return sb
 
 
 # продажа земли
+
 def s_sell_func(ss):
-    ss += randint(-8, 5)
-    if ss <= 0:
-        ss += 10
+    ss += randint(-16, 10)
+    if ss <= 20:
+        ss += 80
     return ss
 
 # покупка материалов
 
 
 def b_buy_func(bb):
-    bb += randint(-15, 10)
-    if bb <= 0:
-        bb += 15
+    bb += randint(-30, 30)
+    if bb <= 20:
+        bb += 80
     return bb
 
 # продажа материалов
 
 
 def b_sell_func(bs):
-    bs += randint(-8, 5)
-    if bs <= 0:
-        bs += 10
+    bs += randint(-16, 10)
+    if bs <= 20:
+        bs += 50
     return bs
 
 # формула цены 1 дом
@@ -62,13 +63,13 @@ def h3_func(sb, bb):
 
 
 def sh_func(sb, bb):
-    sh = 0.75*sb + 0.75*bb
+    sh = 0.95 * sb + 0.8 * bb
     return sh
 
 # рассчёт доходов и расходов:
 
-# доходы
 
+# доходы
 
 def pr_func(hp1, hp2, hp3, sp, hn1, hn2, hn3, sn):
     pr = hp1 * hn1 + hp2 * hn2 + hp3 * hn3 + sp * sn

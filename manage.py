@@ -3,13 +3,13 @@ from statistic import *
 from population import *
 
 
-def nt(houses, hod, money, cash, s_price_buy, s_price_sell, b_price_buy, b_price_sell, h_price_1, h_price_2, h_price_3, sh_price, build_num, house1, house2, house3, shop, shops, pop, pop_max):
+def nt(houses, hod, money, cash, s_price_buy, s_price_sell, b_price_buy, b_price_sell, h_price_1, h_price_2, h_price_3, sh_price, build_num, house1, house2, house3, shop, pop, pop_max, lvl, st):
     houses = 0
     hod += 1
     # рассчёт населения
     pop_max = pm_func(house1['pop'], house2['pop'], house3['pop'],
                       build_num['h1_num'], build_num['h2_num'], build_num["h3_num"])
-    pop = pop_func(shops, cash, pop, pop_max)
+    pop = pop_func(build_num['sh_num'], cash, pop, pop_max)
     money += cash
     # формирование цен на следущий ход //БИРЖА
     s_price_buy = s_buy_func(s_price_buy)
@@ -26,4 +26,4 @@ def nt(houses, hod, money, cash, s_price_buy, s_price_sell, b_price_buy, b_price
                   build_num['h3_num'], house3['lvl'], build_num['sh_num'], shop['lvl'],)
     # Определение статуса
     st = get_status(lvl)
-    return houses, hod, money, cash, s_price_buy, s_price_sell, b_price_buy, b_price_sell, h_price_1, h_price_2, h_price_3, sh_price, build_num, shops, pop, pop_max
+    return houses, hod, money, cash, s_price_buy, s_price_sell, b_price_buy, b_price_sell, h_price_1, h_price_2, h_price_3, sh_price, build_num,  pop, pop_max, lvl, st

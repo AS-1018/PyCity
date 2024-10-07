@@ -15,35 +15,34 @@ build_num = {     # кол-во зданий
 }
 house1 = {        # характеристика 1-эт дома
     'pop': 4,
-    'prof': 5,
+    'prof': 10,
     'def': 2,
     'lvl': 10,
 }
 house2 = {        # характеристика 3-эт дома
     'pop': 15,
-    'prof': 8,
+    'prof': 16,
     'def': 4,
     'lvl': 15,
 }
 house3 = {        # характеристика 5-эт дома
     'pop': 30,
-    'prof': 15,
+    'prof': 30,
     'def': 6,
     'lvl': 30,
 }
 shop = {          # характеристика магазина
     'pop': 0,
-    'prof': 10,
+    'prof': 20,
     'def': 2,
     'lvl': 20,
 }
 houses = 0
-shops = 0
 pop_max = 12
-s_price_buy = 22
-s_price_sell = 12
-b_price_buy = 16
-b_price_sell = 10
+s_price_buy = 110
+s_price_sell = 60
+b_price_buy = 80
+b_price_sell = 50
 pop = 6
 profit = 0
 defit = 0
@@ -62,9 +61,9 @@ lvl = get_lvl(build_num['h1_num'], house1['lvl'], build_num['h2_num'], house2['l
 status = get_status(lvl)
 # рассчёт начального заработка
 profit = pr_func(house1['prof'], house2['prof'], house3['prof'], shop['prof'],
-                 build_num['h1_num'], build_num['h2_num'], build_num['h3_num'], shops)
+                 build_num['h1_num'], build_num['h2_num'], build_num['h3_num'], build_num['sh_num'])
 defit = df_func(house1['def'], house2['def'], house3['def'], shop['def'],
-                build_num['h1_num'], build_num['h2_num'], build_num['h3_num'], shops)
+                build_num['h1_num'], build_num['h2_num'], build_num['h3_num'], build_num['sh_num'])
 cash = profit - defit
 
 logo_draw()
@@ -76,9 +75,9 @@ while True:
 
     # рассчёт заработка
     profit = pr_func(house1['prof'], house2['prof'], house3['prof'], shop['prof'],
-                     build_num['h1_num'], build_num['h2_num'], build_num['h3_num'], shops)
+                     build_num['h1_num'], build_num['h2_num'], build_num['h3_num'], build_num['sh_num'])
     defit = df_func(house1['def'], house2['def'], house3['def'], shop['def'],
-                    build_num['h1_num'], build_num['h2_num'], build_num['h3_num'], shops)
+                    build_num['h1_num'], build_num['h2_num'], build_num['h3_num'], build_num['sh_num'])
     cash = profit - defit
 
     # ввод действия
@@ -122,7 +121,7 @@ while True:
         case 'СТАТИСТИКА': get_stat(build_num['h1_num'], build_num['h2_num'], build_num['h3_num'],
                                     build_num['sh_num'], profit, defit, cash, lvl, status)
 
-        case 'СЛЕДУЩИЙ ХОД' | 'СХ': houses, hod, money, cash, s_price_buy, s_price_sell, b_price_buy, b_price_sell, h_price_1, h_price_2, h_price_3, sh_price, build_num, shops, pop, pop_max = nt(houses,
-                                                                                                                                                                                                   hod, money, cash, s_price_buy, s_price_sell, b_price_buy, b_price_sell, h_price_1, h_price_2, h_price_3, sh_price, build_num, house1, house2, house3, shop, shops, pop, pop_max)
+        case 'СЛЕДУЩИЙ ХОД' | 'СХ': houses, hod, money, cash, s_price_buy, s_price_sell, b_price_buy, b_price_sell, h_price_1, h_price_2, h_price_3, sh_price, build_num, pop, pop_max, lvl, status = nt(houses,
+                                                                                                                                                                                                         hod, money, cash, s_price_buy, s_price_sell, b_price_buy, b_price_sell, h_price_1, h_price_2, h_price_3, sh_price, build_num, house1, house2, house3, shop, pop, pop_max, lvl, status)
         case other:
             print('Такой команды не существует,проверьте,правильно ли ввели команду')

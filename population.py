@@ -1,6 +1,7 @@
 # функция подсчёта роста населения
+
 def pop_func(shops, cash, pop, pop_max):
-    pop_up = int(shops*0.5+cash/10+pop/10)
+    pop_up = int(shops*0.5+cash/40+pop/10)
     pop += pop_up
     print(pop_up)  # для дэбага раскоментировать
     if pop > pop_max:

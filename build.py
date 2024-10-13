@@ -57,4 +57,4 @@ def build_sh(money, sh_price, build_num):
 
 
 def get_price_sh(sh_price):
-    print(f"Сейчас цена магазина составляет {sh_price}")
+    print(f"Сейчас цена 5-этажного дома составляет {sh_price}")

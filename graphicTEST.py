@@ -1,30 +1,41 @@
-import tkinter as tk
+# Pygame шаблон - скелет для нового проекта Pygame
+import pygame
+import random
 
-# Вывод окна
-root = tk.Tk()
-root.title('PyCity Graphic')
+WIDTH = 640
+HEIGHT = 480
+FPS = 30
 
-window_width = 640
-window_height = 480
+# Задаем цвета
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
+RED = (255, 0, 0)
+GREEN = (0, 255, 0)
+BLUE = (0, 0, 255)
 
-# get the screen dimension
-screen_width = root.winfo_screenwidth()
-screen_height = root.winfo_screenheight()
+# Создаем игру и окно
+pygame.init()
+pygame.mixer.init()
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("PyCity Graphic")
+clock = pygame.time.Clock()
 
-# find the center point
-center_x = int(screen_width/2 - window_width / 2)
-center_y = int(screen_height/2 - window_height / 2)
+# Цикл игры
+running = True
+while running:
+    # Держим цикл на правильной скорости
+    clock.tick(FPS)
+    # Ввод процесса (события)
+    for event in pygame.event.get():
+        # check for closing window
+        if event.type == pygame.QUIT:
+            running = False
 
-# set the position of the window to the center of the screen
-root.geometry(f'{window_width}x{window_height}+{center_x}+{center_y}')
+    # Обновление
 
-st = tk.Label(root, text=f"Ход: Деньги: Население:", font=("Arial Bold", 20))
-st.place(x=0, y=0)
+    # Рендеринг
+    screen.fill(BLACK)
+    # После отрисовки всего, переворачиваем экран
+    pygame.display.flip()
 
-nh = tk.Button(root, text="Следущий ход",  font=("Arial Bold", 20))
-nh.place(x=432, y=425)
-
-cmd = tk.Text(root, height=3, width=54)
-cmd.place(x=0, y=430)
-
-root.mainloop()
+pygame.quit()

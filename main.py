@@ -1,9 +1,9 @@
-from random import *
-from math import *
 from economic import *
 from population import *
 from graphics import *
 from statistic import *
+from build import *
+from manage import *
 
 money = 0
 hod = 1
@@ -15,38 +15,38 @@ build_num = {     # кол-во зданий
 }
 house1 = {        # характеристика 1-эт дома
     'pop': 4,
-    'prof': 5,
+    'prof': 10,
     'def': 2,
     'lvl': 10,
 }
 house2 = {        # характеристика 3-эт дома
     'pop': 15,
-    'prof': 8,
+    'prof': 16,
     'def': 4,
     'lvl': 15,
 }
 house3 = {        # характеристика 5-эт дома
     'pop': 30,
-    'prof': 15,
+    'prof': 30,
     'def': 6,
     'lvl': 30,
 }
 shop = {          # характеристика магазина
     'pop': 0,
-    'prof': 10,
+    'prof': 20,
     'def': 2,
     'lvl': 20,
 }
 houses = 0
-shops = 0
 pop_max = 12
-s_price_buy = 22
-s_price_sell = 12
-b_price_buy = 16
-b_price_sell = 10
+s_price_buy = 110
+s_price_sell = 60
+b_price_buy = 80
+b_price_sell = 50
 pop = 6
 profit = 0
 defit = 0
+cash = 0
 st = ''
 
 # инициализация стартовых цен на дома
@@ -57,35 +57,28 @@ sh_price = sh_func(s_price_buy, b_price_buy)
 # определение начального опыта
 lvl = get_lvl(build_num['h1_num'], house1['lvl'], build_num['h2_num'], house2['lvl'],
               build_num['h3_num'], house3['lvl'], build_num['sh_num'], shop['lvl'],)
-# Определение начвального статуса
+# Определение начального статуса
 status = get_status(lvl)
-
+# рассчёт начального заработка
+profit = pr_func(house1['prof'], house2['prof'], house3['prof'], shop['prof'],
+                 build_num['h1_num'], build_num['h2_num'], build_num['h3_num'], build_num['sh_num'])
+defit = df_func(house1['def'], house2['def'], house3['def'], shop['def'],
+                build_num['h1_num'], build_num['h2_num'], build_num['h3_num'], build_num['sh_num'])
+cash = profit - defit
 
 logo_draw()
 
-print('\nPyCity Alpha 0.1.1r27 by A/S')
+print('\nPyCity Alpha 0.1.0.1 by A/S')
 name = input('Введите название вашего города:')
 print('Введите "команды",что бы увидеть список доступных действий и пояснения к ним')
 while True:
 
-    # определение опыта
-    lvl = get_lvl(build_num['h1_num'], house1['lvl'], build_num['h2_num'], house2['lvl'],
-                  build_num['h3_num'], house3['lvl'], build_num['sh_num'], shop['lvl'],)
-
-    # Определение статуса
-    st = get_status(lvl)
-
     # рассчёт заработка
     profit = pr_func(house1['prof'], house2['prof'], house3['prof'], shop['prof'],
-                     build_num['h1_num'], build_num['h2_num'], build_num['h3_num'], shops)
+                     build_num['h1_num'], build_num['h2_num'], build_num['h3_num'], build_num['sh_num'])
     defit = df_func(house1['def'], house2['def'], house3['def'], shop['def'],
-                    build_num['h1_num'], build_num['h2_num'], build_num['h3_num'], shops)
-    cash = profit-defit
-
-    # рассчёт населения
-    pop_max = pm_func(house1['pop'], house2['pop'], house3['pop'],
-                      build_num['h1_num'], build_num['h2_num'], build_num["h3_num"])
-    pop = pop_func(shops, cash, pop, pop_max)
+                    build_num['h1_num'], build_num['h2_num'], build_num['h3_num'], build_num['sh_num'])
+    cash = profit - defit
 
     # ввод действия
     mess = input(f"{name}. Ход: {hod}  Денег: {money}  Население: {pop} >")
@@ -96,84 +89,39 @@ while True:
         case 'ВЫЙТИ': break
 
         # список команд
-        case "КОМАНДЫ":
-            print("\nПостроить дом-1/3/5 - Построить 1/3/5-этажный дом")
-            print("Цена дома-1/3/5 - Цена 1/3/5-этажного дома")
-            print(
-                "Построить магазин \nЦена магазина \nСтатистика \nБиржа \nСледущий ход(сх)\n")
+        case "КОМАНДЫ": get_cmd()
 
         # Дом-1
         case "ПОСТРОИТЬ ДОМ-1":
-            if money >= h_price_1:
-                build_num['h1_num'] = build_num['h1_num'] + 1
-                money = money - h_price_1
-                print("1-этажный дом построен")
-            else:
-                print(f"Недостаточно денег,  не хватает {h_price_1 - money}")
+            build_num['h1_num'], money = build_h1(money, h_price_1, build_num)
 
-        case "ЦЕНА ДОМА-1": print(f"Сейчас цена 1-этажного дома составляет {h_price_1}")
+        case "ЦЕНА ДОМА-1": get_price_h1(h_price_1)
 
         # Дом-3
         case "ПОСТРОИТЬ ДОМ-3":
-            if money >= h_price_1:
-                build_num['h2_num'] = build_num['h2_num'] + 1
-                money = money - h_price_2
-                print("3-этажный дом построен")
-            else:
-                print(f"Недостаточно денег, не хватает {h_price_2 - money}")
+            build_num['h2_num'], money = build_h2(money, h_price_2, build_num)
 
-        case "ЦЕНА ДОМА-3": print(f"Сейчас цена 3-этажного дома составляет {h_price_2}")
+        case "ЦЕНА ДОМА-3": get_price_h2(h_price_2)
 
         # Дом-5
         case "ПОСТРОИТЬ ДОМ-5":
-            if money >= h_price_1:
-                build_num['h3_num'] = build_num['h3_num'] + 1
-                money = money - h_price_3
-                print("5-этажный дом построен")
-            else:
-                print(f"Недостаточно денег,  не хватает {h_price_3 - money}")
+            build_num['h3_num'], money = build_h3(money, h_price_3, build_num)
 
-        case "ЦЕНА ДОМА-5": print(f"Сейчас цена 5-этажного дома составляет {h_price_3}")
+        case "ЦЕНА ДОМА-5": get_price_h3(h_price_3)
 
         # Магазин
         case "ПОСТРОИТЬ МАГАЗИН":
-            if money >= h_price_1:
-                build_num['sh_num'] = build_num['sh_num'] + 1
-                money = money - sh_price
-                print("Магазин построен построен")
-            else:
-                print(f"Недостаточно денег,  не хватает {sh_price - money}")
+            build_num['sh_num'], money = build_sh(money, sh_price, build_num)
 
-        case "ЦЕНА МАГАЗИНА": print(f"Сейчас цена магазина составляет {sh_price}")
+        case "ЦЕНА МАГАЗИНА":  get_price_sh(sh_price)
 
         # открытие биржы
-        case 'БИРЖА':
-            print(
-                f"\nЦены на землю \nПокупка:{s_price_buy} \nПродажа:{s_price_sell}")
-            print(
-                f"Цены на строй. материалы \nПокупка:{b_price_buy} \nПродажа:{b_price_sell}\n")
+        case 'БИРЖА': get_birg(s_price_buy, s_price_sell, b_price_buy, b_price_sell)
 
-        case 'СТАТИСТИКА': get_stat(build_num['h1_num'], build_num['h2_num'], build_num['h3_num'], build_num['sh_num'], profit, defit, cash, lvl, status)
+        case 'СТАТИСТИКА': get_stat(build_num['h1_num'], build_num['h2_num'], build_num['h3_num'],
+                                    build_num['sh_num'], profit, defit, cash, lvl, status)
 
-        case 'СЛЕДУЩИЙ ХОД' | 'СХ':
-            houses = 0
-            hod += 1
-            money += cash
-        # формирование цен на следущий ход //БИРЖА
-            s_price_buy = s_buy_func(s_price_buy)
-            s_price_sell = s_sell_func(s_price_sell)
-            b_price_buy = b_buy_func(b_price_buy)
-            b_price_sell = b_sell_func(b_price_sell)
-        # формирование цен на следущий ход //ПОСТРОЙКИ
-            h_price_1 = h1_func(s_price_buy, b_price_buy)
-            h_price_2 = h2_func(s_price_buy, b_price_buy)
-            h_price_3 = h3_func(s_price_buy, b_price_buy)
-            sh_price = sh_func(s_price_buy, b_price_buy)
-            # определение опыта
-            lvl = get_lvl(build_num['h1_num'], house1['lvl'], build_num['h2_num'], house2['lvl'],
-                          build_num['h3_num'], house3['lvl'], build_num['sh_num'], shop['lvl'],)
-            # Определение статуса
-            st = get_status(lvl)
-
+        case 'СЛЕДУЩИЙ ХОД' | 'СХ': houses, hod, money, cash, s_price_buy, s_price_sell, b_price_buy, b_price_sell, h_price_1, h_price_2, h_price_3, sh_price, build_num, pop, pop_max, lvl, status = nt(houses,
+                                                                                                                                                                                                         hod, money, cash, s_price_buy, s_price_sell, b_price_buy, b_price_sell, h_price_1, h_price_2, h_price_3, sh_price, build_num, house1, house2, house3, shop, pop, pop_max, lvl, status)
         case other:
             print('Такой команды не существует,проверьте,правильно ли ввели команду')
